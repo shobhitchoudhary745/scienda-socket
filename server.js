@@ -20,9 +20,21 @@ dotenv.config({ path: "./config.env" });
 
 const port = process.env.PORT;
 
-
 io.on("connection", (socket) => {
-
+  socket.on("login", async (data) => {
+    try {
+      socket.join(data._id);
+    } catch (error) {
+      io.to(socket.id).emit("error", error);
+    }
+  });
+  socket.on("sendMessage", async (data) => {
+    try {
+      io.to(data.from).emit("receiveMessage", { data });
+    } catch (error) {
+      io.to(socket.id).emit("error", error);
+    }
+  });
 });
 
 server.listen(port, () => console.log("server running on port:" + port));
