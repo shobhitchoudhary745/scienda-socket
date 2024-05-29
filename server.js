@@ -22,6 +22,7 @@ const port = process.env.PORT;
 
 io.on("connection", (socket) => {
   socket.on("login", async (data) => {
+    console.log(data);
     try {
       socket.join(data._id);
     } catch (error) {
