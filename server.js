@@ -32,7 +32,7 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", async (data) => {
     console.log(data)
     try {
-      io.to(data.from).emit("receiveMessage", { data });
+      io.to(data.to).emit("receiveMessage", { data });
     } catch (error) {
       io.to(socket.id).emit("error", error);
     }
